@@ -23,8 +23,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // Routes
-app.use('/api/auth', require('./routes/api/auth'));
-app.use('/api/users', require('./routes/api/users'));
+app.use('/api/products', require('./routes/api/products'));
 
 // Static Build Folder
 if (process.env.NODE_ENV === 'production') {

@@ -1,10 +1,12 @@
 import { Row, Col, Image, ListGroup, Card, Button } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
 import Rating from '../components/Rating';
-import products from '../products';
+import { useSelector } from 'react-redux';
 
 const ProductScreen = () => {
   const { id } = useParams();
+
+  const { products } = useSelector(state => state.product);
 
   const product = products.find(p => p._id === id);
 
