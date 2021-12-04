@@ -1,11 +1,11 @@
 // Bring in Model
-const Product = require('../models/Product');
+import Product from '../models/Product.js';
 
 //  @route  GET api/products
 //  @desc   Get All Products
 //  @access Public
 
-exports.getProducts = async (req, res, next) => {
+export const getProducts = async (req, res, next) => {
   try {
     const products = await Product.find().sort({ date: -1 });
 
@@ -22,7 +22,7 @@ exports.getProducts = async (req, res, next) => {
 //  @desc   Get Product ById
 //  @access Public
 
-exports.getProductById = async (req, res, next) => {
+export const getProductById = async (req, res, next) => {
   try {
     const product = await Product.findById(req.params.id);
 
@@ -30,7 +30,7 @@ exports.getProductById = async (req, res, next) => {
       return res.status(400).json({ msg: 'Product not found' });
     }
 
-    res.status(200).json(product); 
+    res.status(200).json(product);
   } catch (err) {
     if (err.kind == 'ObjectId') {
       return res.status(400).json({ msg: 'Product not found' });

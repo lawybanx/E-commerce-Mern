@@ -1,9 +1,10 @@
-const express = require('express');
-const path = require('path');
-const dotenv = require('dotenv');
-const colors = require('colors');
-const morgan = require('morgan');
-const connectDB = require('./config/db');
+import express from 'express';
+import path from 'path';
+import dotenv from 'dotenv';
+import colors from 'colors';
+import morgan from 'morgan';
+import connectDB from './config/db.js';
+import { product } from './routes/api/products.js';
 
 dotenv.config();
 
@@ -23,7 +24,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // Routes
-app.use('/api/products', require('./routes/api/products'));
+app.use('/api/products', product);
 
 // Static Build Folder
 if (process.env.NODE_ENV === 'production') {
