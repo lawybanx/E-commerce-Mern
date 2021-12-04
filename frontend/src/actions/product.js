@@ -1,5 +1,9 @@
 import axios from 'axios';
-import { GET_PRODUCTS } from './types';
+import {
+  PRODUCTS_LIST_PAGE,
+  PRODUCT_DETAILS_PAGE,
+  PRODUCT_ERROR,
+} from './types';
 
 // Get All products
 export const getProducts = () => async dispatch => {
@@ -7,17 +11,35 @@ export const getProducts = () => async dispatch => {
     const res = await axios.get('/api/products');
 
     dispatch({
-      type: GET_PRODUCTS,
+      type: PRODUCTS_LIST_PAGE,
       payload: res.data,
     });
   } catch (err) {
-    console.log(err);
-    // dispatch({
-    //   type: PROFILE_ERROR,
-    //   payload: {
-    //     msg: err.response.statusText,
-    //     status: err.response.status,
-    //   },
-    // });
+    dispatch({
+      type: PRODUCT_ERROR,
+      payload: {
+        msg: err.response.statusText,
+        status: err.response.status,
+      },
+    });
+  }
+};
+
+// Get product ById
+export const getProductById = id => async dispatch => {
+  try {
+    const res = await axios.get(`/api/products/${id}`);
+    dispatch({
+      type: PRODUCT_DETAILS_PAGE,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: PRODUCT_ERROR,
+      payload: {
+        msg: err.response.statusText,
+        status: err.response.status,
+      },
+    });
   }
 };
