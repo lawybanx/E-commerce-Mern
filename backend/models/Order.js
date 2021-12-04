@@ -37,7 +37,6 @@ const orderSchema = new Schema(
       status: { type: String },
       update_time: { type: String },
       email_address: { type: String },
-      required: true,
     },
     taxPrice: {
       type: Number,
