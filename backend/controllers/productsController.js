@@ -1,3 +1,4 @@
+import asyncHandler from 'express-async-handler';
 // Bring in Model
 import Product from '../models/Product.js';
 
@@ -5,37 +6,22 @@ import Product from '../models/Product.js';
 //  @desc   Get All Products
 //  @access Public
 
-export const getProducts = async (req, res, next) => {
-  try {
-    const products = await Product.find().sort({ date: -1 });
+export const getProducts = asyncHandler(async (req, res, next) => {
+  const products = await Product.find({});
 
-    return res.status(200).json(products);
-  } catch (err) {
-    return res.status(500).json({
-      success: false,
-      error: 'Server Error',
-    });
-  }
-};
+  res.status(200).json(products);
+});
 
 //  @route  GET api/products/:id
-//  @desc   Get Product ById
+//  @desc   Get single Product
 //  @access Public
 
-export const getProductById = async (req, res, next) => {
-  try {
-    const product = await Product.findById(req.params.id);
+export const getProductById = asyncHandler(async (req, res, next) => {
+  const product = await Product.findById(req.params.id);
 
-    if (!product) {
-      return res.status(400).json({ msg: 'Product not found' });
-    }
-
-    res.status(200).json(product);
-  } catch (err) {
-    if (err.kind == 'ObjectId') {
-      return res.status(400).json({ msg: 'Product not found' });
-    }
-
-    res.status(400).json({ error: err.message });
+  if (!product) {
+    return res.status(404).json({ msg: 'Product not found' });
   }
-};
+
+  res.status(200).json(product);
+});

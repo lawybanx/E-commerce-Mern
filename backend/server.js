@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import colors from 'colors';
 import morgan from 'morgan';
 import connectDB from './config/db.js';
-import { product } from './routes/api/products.js';
+import productRoutes from './routes/api/productRoutes.js';
 
 dotenv.config();
 
@@ -24,7 +24,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // Routes
-app.use('/api/products', product);
+app.use('/api/products', productRoutes);
 
 // Static Build Folder
 if (process.env.NODE_ENV === 'production') {
