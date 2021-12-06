@@ -25,3 +25,8 @@ export const getProductById = asyncHandler(async (req, res, next) => {
 
   res.status(200).json(product);
 });
+
+//  @route  GET errors
+//  @desc   Error Handler 
+//  @access Public
+// Make Custom Error Handler Route
