@@ -26,15 +26,3 @@ export const getProductById = asyncHandler(async (req, res, next) => {
   res.status(200).json(product);
 });
 
-//  @route  GET errors
-//  @desc   Error Handler
-//  @access Public
-
-export const customErrorHandler = (err, req, res, next) => {
-  const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
-  res.status = statusCode;
-  res.json({
-    msg: err.message,
-    stack: process.env.NODE_ENV === 'production' ? null : err.stack,
-  });
-};

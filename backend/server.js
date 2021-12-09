@@ -5,7 +5,7 @@ import colors from 'colors';
 import morgan from 'morgan';
 import connectDB from './config/db.js';
 import productRoutes from './routes/api/productRoutes.js';
-import { customErrorHandler } from './controllers/productsController.js';
+import errorHandler from './middleware/errorMiddleware';
 
 dotenv.config();
 
@@ -28,7 +28,7 @@ if (process.env.NODE_ENV === 'development') {
 app.use('/api/products', productRoutes);
 
 // Custom error middleware
-app.use(customErrorHandler);
+app.use(errorHandler);
 
 // Static Build Folder
 if (process.env.NODE_ENV === 'production') {
