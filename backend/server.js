@@ -28,7 +28,8 @@ if (process.env.NODE_ENV === 'development') {
 app.use('/api/products', productRoutes);
 
 // Custom error middleware
-app.use(notFound, errorHandler);
+app.use(notFound);
+app.use(errorHandler);
 
 // Static Build Folder
 if (process.env.NODE_ENV === 'production') {
