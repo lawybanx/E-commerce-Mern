@@ -5,7 +5,7 @@ import colors from 'colors';
 import morgan from 'morgan';
 import connectDB from './config/db.js';
 import productRoutes from './routes/api/productRoutes.js';
-import errorHandler from './middleware/errorMiddleware';
+import errorHandler from './middleware/errorMiddleware.js';
 
 dotenv.config();
 
