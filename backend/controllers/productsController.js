@@ -20,9 +20,9 @@ export const getProductById = asyncHandler(async (req, res, next) => {
   const product = await Product.findById(req.params.id);
 
   if (!product) {
-    return res.status(404).json({ msg: 'Product not found' });
+    res.status(404);
+    throw new Error('Product not found');
   }
 
   res.status(200).json(product);
 });
-
