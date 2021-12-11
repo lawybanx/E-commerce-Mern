@@ -1,30 +1,40 @@
 import {
-  PRODUCTS_LIST_PAGE,
-  PRODUCT_DETAILS_PAGE,
-  PRODUCT_ERROR,
+  PRODUCTS_LIST_REQUEST,
+  PRODUCTS_LIST_SUCCESS,
+  PRODUCTS_LIST_FAIL,
+  PRODUCT_DETAILS_REQUEST,
+  PRODUCT_DETAILS_SUCCESS,
+  PRODUCT_DETAILS_FAIL,
 } from '../actions/types';
 
-const initialState = {
-  products: [],
-  product: null,
-  loading: true,
-  error: {},
-};
-
-const product = (state = initialState, { type, payload }) => {
+export const productList = (state = { products: [] }, { type, payload }) => {
   switch (type) {
-    case PRODUCTS_LIST_PAGE:
-      return { ...state, products: payload, loading: false, product: null };
+    case PRODUCTS_LIST_REQUEST:
+      return { loading: true, products: [] };
 
-    case PRODUCT_DETAILS_PAGE:
-      return { ...state, product: payload, loading: false };
+    case PRODUCTS_LIST_SUCCESS:
+      return { loading: false, products: payload };
 
-    case PRODUCT_ERROR:
-      return { ...state, error: payload, profile: null, loading: false };
+    case PRODUCTS_LIST_FAIL:
+      return { loading: false, error: payload };
 
     default:
       return state;
   }
 };
 
-export default product;
+export const product = (state = { product: null }, { type, payload }) => {
+  switch (type) {
+    case PRODUCT_DETAILS_REQUEST:
+      return { loading: true, product: null };
+
+    case PRODUCT_DETAILS_SUCCESS:
+      return { loading: false, product: payload };
+
+    case PRODUCT_DETAILS_FAIL:
+      return { loading: false, error: payload };
+
+    default:
+      return state;
+  }
+};

@@ -1,22 +1,25 @@
 import axios from 'axios';
 import {
-  PRODUCTS_LIST_PAGE,
-  PRODUCT_DETAILS_PAGE,
-  PRODUCT_ERROR,
+  // PRODUCTS_LIST_REQUEST,
+  PRODUCTS_LIST_SUCCESS,
+  PRODUCTS_LIST_FAIL,
+  // PRODUCT_DETAILS_REQUEST,
+  PRODUCT_DETAILS_SUCCESS,
+  PRODUCT_DETAILS_FAIL,
 } from './types';
 
 // Get All products
-export const getProducts = () => async dispatch => {
+export const getProducts = () => async (dispatch) => {
   try {
     const res = await axios.get('/api/products');
 
     dispatch({
-      type: PRODUCTS_LIST_PAGE,
+      type: PRODUCTS_LIST_SUCCESS,
       payload: res.data,
     });
   } catch (err) {
     dispatch({
-      type: PRODUCT_ERROR,
+      type: PRODUCTS_LIST_FAIL,
       payload: {
         msg: err.response.statusText,
         status: err.response.status,
@@ -26,16 +29,16 @@ export const getProducts = () => async dispatch => {
 };
 
 // Get product ById
-export const getProductById = id => async dispatch => {
+export const getProductById = (id) => async (dispatch) => {
   try {
     const res = await axios.get(`/api/products/${id}`);
     dispatch({
-      type: PRODUCT_DETAILS_PAGE,
+      type: PRODUCT_DETAILS_SUCCESS,
       payload: res.data,
     });
   } catch (err) {
     dispatch({
-      type: PRODUCT_ERROR,
+      type: PRODUCT_DETAILS_FAIL,
       payload: {
         msg: err.response.statusText,
         status: err.response.status,

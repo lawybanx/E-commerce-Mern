@@ -11,7 +11,7 @@ const HomeScreen = () => {
     dispatch(getProducts());
   }, [dispatch]);
 
-  const { products } = useSelector(state => state.product);
+  const { products } = useSelector(state => state.productList);
 
   return (
     <>
