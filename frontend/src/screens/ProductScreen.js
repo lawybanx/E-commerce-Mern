@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProductById } from '../actions/product';
 import ProductDetails from '../components/ProductDetails';
+import Loader from '../components/Loader';
 
 const ProductScreen = () => {
   const dispatch = useDispatch();
@@ -12,10 +13,10 @@ const ProductScreen = () => {
     dispatch(getProductById(id));
   }, [dispatch, id]);
 
-  const { product } = useSelector(state => state.product);
+  const { product } = useSelector((state) => state.product);
 
   return (
-    <>{product === null ? <>Yes</> : <ProductDetails product={product} />}</>
+    <>{product === null ? <Loader /> : <ProductDetails product={product} />}</>
   );
 };
 
