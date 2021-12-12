@@ -15,11 +15,6 @@ const ProductDetails = ({
 }) => {
   return (
     <>
-      <Link to='/'>
-        <Button className='my-3' variant='light'>
-          Go back
-        </Button>
-      </Link>
       <Row>
         <Col md={6}>
           <Image src={image} alt={name} fluid />

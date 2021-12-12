@@ -1,7 +1,7 @@
 import {
-  PRODUCTS_LIST_REQUEST,
-  PRODUCTS_LIST_SUCCESS,
-  PRODUCTS_LIST_FAIL,
+  PRODUCT_LIST_REQUEST,
+  PRODUCT_LIST_SUCCESS,
+  PRODUCT_LIST_FAIL,
   PRODUCT_DETAILS_REQUEST,
   PRODUCT_DETAILS_SUCCESS,
   PRODUCT_DETAILS_FAIL,
@@ -9,13 +9,13 @@ import {
 
 export const productList = (state = { products: [] }, { type, payload }) => {
   switch (type) {
-    case PRODUCTS_LIST_REQUEST:
+    case PRODUCT_LIST_REQUEST:
       return { loading: true, products: [] };
 
-    case PRODUCTS_LIST_SUCCESS:
+    case PRODUCT_LIST_SUCCESS:
       return { loading: false, products: payload };
 
-    case PRODUCTS_LIST_FAIL:
+    case PRODUCT_LIST_FAIL:
       return { loading: false, error: payload };
 
     default:
@@ -23,10 +23,13 @@ export const productList = (state = { products: [] }, { type, payload }) => {
   }
 };
 
-export const product = (state = { product: null }, { type, payload }) => {
+export const productDetails = (
+  state = { product: { reviews: [] } },
+  { type, payload }
+) => {
   switch (type) {
     case PRODUCT_DETAILS_REQUEST:
-      return { loading: true, product: null };
+      return { loading: true, ...state };
 
     case PRODUCT_DETAILS_SUCCESS:
       return { loading: false, product: payload };
