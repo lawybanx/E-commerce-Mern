@@ -1,5 +1,5 @@
 {
-  "name": "e-commerce-mern",
+  "name": "e-commerce-mern-backend",
   "version": "1.0.0",
   "description": "```bash\r # Install dependencies for server\r npm install",
   "main": "server.js",
