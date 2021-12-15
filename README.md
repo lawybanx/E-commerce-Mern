@@ -21,6 +21,7 @@ npm run data:import
 
 # Run the destroy data seeder script
 npm run data:destroy
+:computer:
 
 # Server runs on http://localhost:5000 and client on http://localhost:3000
 ```
