@@ -1,6 +1,6 @@
 ## Quick Start
-
 ```bash
+
 # Install dependencies for server
 npm install
 
