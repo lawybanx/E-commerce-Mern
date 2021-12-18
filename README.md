@@ -7,7 +7,7 @@ npm install
 npm run client-install
 
 # Run the client & server with concurrently
-npm run dev
+npm run dev 
 
 # Run the Express server only
 npm run server
