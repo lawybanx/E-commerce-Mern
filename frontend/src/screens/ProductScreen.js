@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { listProductDetails } from '../actions/product';
@@ -9,7 +9,10 @@ import Message from '../components/Message';
 
 const ProductScreen = () => {
   const dispatch = useDispatch();
+
   const { id } = useParams();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(listProductDetails(id));
@@ -18,6 +21,10 @@ const ProductScreen = () => {
   const { loading, error, product } = useSelector(
     (state) => state.productDetails
   );
+
+  const addToCartHandler = (qty) => {
+    navigate(`/cart/${id}?qty=${qty}`);
+  };
 
   return (
     <>
@@ -31,7 +38,7 @@ const ProductScreen = () => {
       ) : error ? (
         <Message variant='danger'>{error}</Message>
       ) : (
-        <ProductDetails product={product} />
+        <ProductDetails product={product} addToCartHandler={addToCartHandler} />
       )}
     </>
   );
