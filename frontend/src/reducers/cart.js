@@ -7,7 +7,12 @@ export const cart = (state = { cartItems: [] }, { type, payload }) => {
 
       const existItem = state.cartItems.find(x => x.product === item.product);
       if (existItem) {
-        return { ...state };
+        return {
+          ...state,
+          cartItems: state.cartItems.map(x =>
+            x.product === existItem.product ? item : x
+          ),
+        };
       }
       return {
         ...state,
