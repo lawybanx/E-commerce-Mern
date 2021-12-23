@@ -67,9 +67,9 @@ const ProductDetails = ({
                       <FormControl
                         as='select'
                         value={qty}
-                        onChange={(e) => setQty(e.target.value)}
+                        onChange={e => setQty(e.target.value)}
                       >
-                        {[...Array(countInStock).keys()].map((x) => (
+                        {[...Array(countInStock).keys()].map(x => (
                           <option key={x + 1} value={x + 1}>
                             {x + 1}
                           </option>
