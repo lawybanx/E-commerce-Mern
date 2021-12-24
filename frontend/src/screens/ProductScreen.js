@@ -6,7 +6,6 @@ import { listProductDetails } from '../actions/product';
 import ProductDetails from '../components/ProductDetails';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
-import { addToCart } from '../actions/cart';
 
 const ProductScreen = () => {
   const dispatch = useDispatch();
@@ -25,7 +24,6 @@ const ProductScreen = () => {
 
   const addToCartHandler = qty => {
     navigate(`/cart/${id}?qty=${qty}`);
-    dispatch(addToCart(id,qty));
   };
 
   return (
