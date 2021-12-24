@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import {
   Col,
   Image,
@@ -8,7 +8,7 @@ import {
   ListGroup,
   Card,
 } from 'react-bootstrap';
-import { Link, useParams, useLocation } from 'react-router-dom';
+import { Link, useParams, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../actions/cart';
 import Message from '../components/Message';
@@ -22,6 +22,8 @@ const CartScreen = () => {
 
   const { search } = useLocation();
 
+  const navigate = useNavigate();
+
   const qty = search ? Number(search.split('=')[1]) : 1;
 
   useEffect(() => {
@@ -32,6 +34,10 @@ const CartScreen = () => {
 
   const removeFromCartHandler = id => {
     console.log(id);
+  };
+
+  const checkoutHandler = () => {
+    navigate('/login?redirect=shipping');
   };
 
   return (
@@ -95,6 +101,20 @@ const CartScreen = () => {
                   Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)}
                   ) items
                 </h2>
+                $
+                {cartItems
+                  .reduce((acc, item) => acc + item.qty * item.price, 0)
+                  .toFixed(2)}
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <Button
+                  type='button'
+                  className='btn-block'
+                  disabled={cartItems.length === 0}
+                  onClick={checkoutHandler}
+                >
+                  Proceed to Checkout
+                </Button>
               </ListGroup.Item>
             </ListGroup>
           </Card>
