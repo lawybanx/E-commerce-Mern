@@ -1,6 +1,6 @@
 import asyncHandler from 'express-async-handler';
 import { validationResult } from 'express-validator';
-import jwt from 'jsonwebtoken';
+import generateToken from '../utils/generateToken.js';
 import bcrypt from 'bcryptjs';
 
 // Bring in Model
@@ -33,15 +33,6 @@ export const registerUser = asyncHandler(async (req, res) => {
   const userExists = await User.findOne({ email });
   if (userExists) return res.status(400).json({ msg: 'User already exists' });
 
-  const avatar = normalize(
-    gravatar.url(email, {
-      s: '200',
-      r: 'pg',
-      d: 'mm',
-    }),
-    { forceHttps: true }
-  );
-
   // Create Salt & Hash password
   const salt = await bcrypt.genSalt(10);
   if (!salt) throw Error('Something went wrong with bcrypt');
@@ -52,17 +43,12 @@ export const registerUser = asyncHandler(async (req, res) => {
   const user = await User.create({
     name,
     email,
-    avatar,
     password: hash,
   });
 
   if (!user) throw Error('Something went wrong saving the user');
 
-  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-    expiresIn: '90d',
-  });
-
-  res.status(201).json({ token });
+  res.status(201).json({ token: generateToken(user._id) });
 });
 
 //  @route  POST api/auth/login
@@ -86,11 +72,13 @@ export const loginUser = asyncHandler(async (req, res) => {
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) return res.status(400).json({ msg: 'Invalid credentials' });
 
-  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-    expiresIn: '90d',
+  res.status(200).json({
+    _id: user.id,
+    name: user.name,
+    email: user.email,
+    isAdmin: user.isAdmin,
+    token: generateToken(user._id),
   });
-
-  res.status(200).json({ token });
 });
 
 //  @route  GET api/auth/user
