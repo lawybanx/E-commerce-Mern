@@ -81,8 +81,8 @@ export const loginUser = asyncHandler(async (req, res) => {
   });
 });
 
-//  @route  GET api/auth/user
-//  @desc   Get user data
+//  @route  GET api/auth/profile
+//  @desc   Get user profile data
 //  @access Private
 
 export const getUser = asyncHandler(async (req, res, next) => {

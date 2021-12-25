@@ -34,6 +34,6 @@ router.post(
   loginUser
 );
 
-router.get('/user', auth, getUser);
+router.route('/profile').get(auth, getUser);
 
 export default router;
