@@ -69,7 +69,7 @@ export const registerUser = asyncHandler(async (req, res) => {
 //  @desc   Login user
 //  @access Public
 
-export const loginUser = async (req, res) => {
+export const loginUser = asyncHandler(async (req, res) => {
   // Get Errors
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -78,24 +78,20 @@ export const loginUser = async (req, res) => {
 
   const { email, password } = req.body;
 
-  try {
-    // Check for existing user
-    const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ msg: 'Invalid credentials' });
+  // Check for existing user
+  const user = await User.findOne({ email });
+  if (!user) return res.status(400).json({ msg: 'Invalid credentials' });
 
-    // Validating password
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ msg: 'Invalid credentials' });
+  // Validating password
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) return res.status(400).json({ msg: 'Invalid credentials' });
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: '90d',
-    });
+  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+    expiresIn: '90d',
+  });
 
-    res.status(200).json({ token });
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-};
+  res.status(200).json({ token });
+});
 
 //  @route  GET api/auth/user
 //  @desc   Get user data

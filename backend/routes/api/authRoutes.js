@@ -10,7 +10,7 @@ import { auth } from '../../middleware/auth.js';
 
 const router = express.Router();
 
-router.get('/users', getUsers);
+router.get('/users', auth, getUsers);
 
 router.post(
   '/register',
