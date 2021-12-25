@@ -86,8 +86,13 @@ export const loginUser = asyncHandler(async (req, res) => {
 //  @access Private
 
 export const getUser = asyncHandler(async (req, res, next) => {
-  const user = await User.findById(req.user.id).select('-password');
-  if (!user) throw Error('User does not exist');
+  const user = await User.findById(req.user._id);
+  if (!user) throw new Error('User does not exist');
 
-  return res.status(200).json(user);
+  return res.json({
+    _id: user.id,
+    name: user.name,
+    email: user.email,
+    isAdmin: user.isAdmin,
+  });
 });
