@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import {
   Col,
   Image,
@@ -8,7 +7,7 @@ import {
   ListGroup,
   Card,
 } from 'react-bootstrap';
-import { Link, useParams, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, removeFromCart } from '../actions/cart';
 import Message from '../components/Message';
@@ -18,19 +17,7 @@ const CartScreen = () => {
 
   const { cartItems } = useSelector(state => state.cart);
 
-  const { id } = useParams();
-
-  const { search } = useLocation();
-
   const navigate = useNavigate();
-
-  const qty = search ? Number(search.split('=')[1]) : 1;
-
-  useEffect(() => {
-    if (id) {
-      dispatch(addToCart(id, qty));
-    }
-  }, [dispatch, id, qty]);
 
   const removeFromCartHandler = id => {
     dispatch(removeFromCart(id));

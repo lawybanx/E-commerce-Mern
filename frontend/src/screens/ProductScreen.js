@@ -3,6 +3,7 @@ import { Link, useParams, useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { listProductDetails } from '../actions/product';
+import { addToCart } from '../actions/cart';
 import ProductDetails from '../components/ProductDetails';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
@@ -23,6 +24,8 @@ const ProductScreen = () => {
   );
 
   const addToCartHandler = qty => {
+    dispatch(addToCart(id, qty));
+
     navigate(`/cart/${id}?qty=${qty}`);
   };
 
