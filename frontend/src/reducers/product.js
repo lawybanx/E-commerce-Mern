@@ -5,7 +5,7 @@ import {
   PRODUCT_DETAILS_REQUEST,
   PRODUCT_DETAILS_SUCCESS,
   PRODUCT_DETAILS_FAIL,
-} from '../actions/types';
+} from '../constants/productConstants';
 
 export const productList = (state = { products: [] }, { type, payload }) => {
   switch (type) {
