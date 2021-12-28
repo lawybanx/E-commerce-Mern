@@ -11,7 +11,7 @@ const LoginScreen = () => {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
-  
+
   const { search } = useLocation();
 
   const redirect = search ? search.split('=')[1] : '/';
@@ -40,6 +40,8 @@ const LoginScreen = () => {
   return (
     <FormContainer>
       <h1>Sign In</h1>
+      {error && <Message variant='danger'>{error}</Message>}
+      {loading && <Loader />}
       <Form onSubmit={submitHandler}>
         <Form.Group className='mb-3' controlId='email'>
           <Form.Label>Email Address</Form.Label>
