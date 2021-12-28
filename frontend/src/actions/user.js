@@ -25,7 +25,7 @@ export const loginUser = formData => async dispatch => {
       payload:
         err.response && err.response.data.message
           ? err.response.data.message
-          : err.message,
+          : err.response.data.errors,
     });
   }
 };

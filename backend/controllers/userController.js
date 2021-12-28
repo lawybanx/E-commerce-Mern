@@ -23,7 +23,8 @@ export const registerUser = asyncHandler(async (req, res, next) => {
   // Get Errors
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
+    res.status(401);
+    throw new Error('Invalid Email or Password');
   }
 
   const { name, email, password } = req.body;
@@ -60,7 +61,8 @@ export const loginUser = asyncHandler(async (req, res) => {
   // Get Errors
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
+    res.status(401);
+    throw new Error('Invalid Email or Password');
   }
 
   const { email, password } = req.body;
