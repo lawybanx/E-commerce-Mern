@@ -78,9 +78,10 @@ export const loginUser = asyncHandler(async (req, res) => {
       isAdmin: user.isAdmin,
       token: generateToken(user._id),
     });
+  } else {
+    res.status(401);
+    throw new Error('Invalid credentials');
   }
-  res.status(401);
-  throw new Error('Invalid credentials');
 });
 
 //  @route  GET api/Users/profile
