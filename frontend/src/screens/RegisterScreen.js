@@ -43,7 +43,7 @@ const RegisterScreen = () => {
 
   return (
     <FormContainer>
-      <h1>Register</h1>
+      <h1>Sign Up</h1>
       {error && <Message variant='danger'>{error}</Message>}
       {password !== password2 && (
         <Message variant='danger'>Passwords do not match</Message>

@@ -7,6 +7,9 @@ import {
   USER_REGISTER_FAIL,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
+  USER_DETAILS_REQUEST,
+  USER_DETAILS_FAIL,
+  USER_DETAILS_SUCCESS,
 } from '../constants/userConstants';
 
 // Login User
@@ -61,4 +64,26 @@ export const registerUser = formData => async dispatch => {
 export const logout = () => dispatch => {
   localStorage.removeItem('userInfo');
   dispatch({ type: USER_LOGOUT });
+};
+
+// Get User Profile
+export const userProfile = id => async dispatch => {
+  try {
+    dispatch({ type: USER_DETAILS_REQUEST });
+
+    const { data } = await axios.get(`api/users/profile/${id}`);
+
+    dispatch({
+      type: USER_DETAILS_SUCCESS,
+      payload: data,
+    });
+  } catch (err) {
+    dispatch({
+      type: USER_DETAILS_FAIL,
+      payload:
+        err.response && err.response.data.message
+          ? err.response.data.message
+          : err.response.data.errors,
+    });
+  }
 };
