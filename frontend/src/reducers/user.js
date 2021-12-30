@@ -8,7 +8,7 @@ import {
   USER_REGISTER_SUCCESS,
 } from '../constants/userConstants';
 
-export const userLogin = (state = {}, { type, payload }) => {
+export const user = (state = {}, { type, payload }) => {
   switch (type) {
     case USER_LOGIN_REQUEST:
     case USER_REGISTER_REQUEST:
