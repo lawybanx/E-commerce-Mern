@@ -13,6 +13,7 @@ import {
   USER_UPDATE_PROFILE_REQUEST,
   USER_UPDATE_PROFILE_SUCCESS,
   USER_UPDATE_PROFILE_FAIL,
+  USER_DETAILS_RESET,
 } from '../constants/userConstants';
 
 // Login User
@@ -66,7 +67,10 @@ export const registerUser = formData => async dispatch => {
 // Logout User
 export const logout = () => dispatch => {
   localStorage.removeItem('userInfo');
+  // localStorage.removeItem('cartItems');
+  dispatch({ type: USER_DETAILS_RESET });
   dispatch({ type: USER_LOGOUT });
+  // document.location.href = '/login';
 };
 
 // Get User Profile
@@ -106,6 +110,13 @@ export const updateUserProfile = formData => async (dispatch, getState) => {
       type: USER_UPDATE_PROFILE_SUCCESS,
       payload: data,
     });
+
+    dispatch({
+      type: USER_LOGIN_SUCCESS,
+      payload: data,
+    });
+
+    localStorage.setItem('userInfo', JSON.stringify(data));
   } catch (err) {
     dispatch({
       type: USER_UPDATE_PROFILE_FAIL,

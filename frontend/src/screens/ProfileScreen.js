@@ -5,6 +5,7 @@ import { Form, Button, Row, Col } from 'react-bootstrap';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { getUserDetails, updateUserProfile } from '../actions/user';
+import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants';
 
 const ProfileScreen = () => {
   const dispatch = useDispatch();
@@ -15,6 +16,8 @@ const ProfileScreen = () => {
 
   const { user, loading, error } = useSelector(state => state.userDetails);
 
+  const { success } = useSelector(state => state.userUpdateProfile);
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -24,20 +27,21 @@ const ProfileScreen = () => {
     if (!userInfo) {
       navigate('/login');
     } else {
-      if (!user.name) {
+      if (!user || !user.name || success) {
+        dispatch({ type: USER_UPDATE_PROFILE_RESET });
         dispatch(getUserDetails('profile'));
       } else {
         setName(user.name);
         setEmail(user.email);
       }
     }
-  }, [userInfo, user, dispatch, navigate]);
+  }, [userInfo, user, dispatch, navigate, success]);
 
-  const formData = { name, email, password };
   const submitHandler = e => {
     e.preventDefault();
+
     if (password === password2) {
-      dispatch(updateUserProfile(formData));
+      dispatch(updateUserProfile({ id: user._id, name, email, password }));
     }
   };
 
@@ -46,6 +50,7 @@ const ProfileScreen = () => {
       <Col md={3}>
         <h2>User Profile</h2>
         {error && <Message variant='danger'>{error}</Message>}
+        {success && <Message variant='success'>Updated successfully</Message>}
         {password !== password2 && (
           <Message variant='danger'>Passwords do not match</Message>
         )}

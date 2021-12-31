@@ -12,6 +12,8 @@ import {
   USER_UPDATE_PROFILE_REQUEST,
   USER_UPDATE_PROFILE_SUCCESS,
   USER_UPDATE_PROFILE_FAIL,
+  USER_UPDATE_PROFILE_RESET,
+  USER_DETAILS_RESET,
 } from '../constants/userConstants';
 
 export const user = (state = {}, { type, payload }) => {
@@ -47,6 +49,9 @@ export const userDetails = (state = { user: {} }, { type, payload }) => {
     case USER_DETAILS_FAIL:
       return { loading: false, error: payload };
 
+    case USER_DETAILS_RESET:
+      return {};
+
     default:
       return state;
   }
@@ -62,6 +67,9 @@ export const userUpdateProfile = (state = {}, { type, payload }) => {
 
     case USER_UPDATE_PROFILE_FAIL:
       return { loading: false, error: payload };
+
+    case USER_UPDATE_PROFILE_RESET:
+      return {};
 
     default:
       return state;
