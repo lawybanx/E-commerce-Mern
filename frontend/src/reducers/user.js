@@ -6,6 +6,12 @@ import {
   USER_REGISTER_FAIL,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
+  USER_DETAILS_REQUEST,
+  USER_DETAILS_SUCCESS,
+  USER_DETAILS_FAIL,
+  USER_UPDATE_PROFILE_REQUEST,
+  USER_UPDATE_PROFILE_SUCCESS,
+  USER_UPDATE_PROFILE_FAIL,
 } from '../constants/userConstants';
 
 export const user = (state = {}, { type, payload }) => {
@@ -24,6 +30,25 @@ export const user = (state = {}, { type, payload }) => {
 
     case USER_LOGOUT:
       return {};
+
+    default:
+      return state;
+  }
+};
+
+export const userDetails = (state = { user: {} }, { type, payload }) => {
+  switch (type) {
+    case USER_DETAILS_REQUEST:
+    case USER_UPDATE_PROFILE_REQUEST:
+      return { ...state, loading: true };
+
+    case USER_DETAILS_SUCCESS:
+    case USER_UPDATE_PROFILE_SUCCESS:
+      return { loading: false, user: payload };
+
+    case USER_DETAILS_FAIL:
+    case USER_UPDATE_PROFILE_FAIL:
+      return { loading: false, error: payload };
 
     default:
       return state;
