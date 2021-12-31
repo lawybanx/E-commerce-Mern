@@ -15,17 +15,10 @@ const ProfileScreen = () => {
 
   const { user, loading, error } = useSelector(state => state.userDetails);
 
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    password2: '',
-  });
-  const { name, email, password, password2 } = formData;
-
-  const onChange = e => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [password2, setPassword2] = useState('');
 
   useEffect(() => {
     if (!userInfo) {
@@ -34,11 +27,13 @@ const ProfileScreen = () => {
       if (!user.name) {
         dispatch(getUserDetails('profile'));
       } else {
-        setFormData({ name: user.name, email: user.email });
+        setName(user.name);
+        setEmail(user.email);
       }
     }
   }, [userInfo, user, dispatch, navigate]);
 
+  const formData = { name, email, password };
   const submitHandler = e => {
     e.preventDefault();
     if (password === password2) {
@@ -49,7 +44,7 @@ const ProfileScreen = () => {
   return (
     <Row>
       <Col md={3}>
-        <h1>Update profile</h1>
+        <h2>User Profile</h2>
         {error && <Message variant='danger'>{error}</Message>}
         {password !== password2 && (
           <Message variant='danger'>Passwords do not match</Message>
@@ -63,7 +58,7 @@ const ProfileScreen = () => {
               type='text'
               placeholder='Enter your name'
               value={name}
-              onChange={e => onChange(e)}
+              onChange={e => setName(e.target.value)}
             ></Form.Control>
           </Form.Group>
 
@@ -74,7 +69,7 @@ const ProfileScreen = () => {
               type='email'
               placeholder='Enter email'
               value={email}
-              onChange={e => onChange(e)}
+              onChange={e => setEmail(e.target.value)}
             ></Form.Control>
           </Form.Group>
 
@@ -85,7 +80,7 @@ const ProfileScreen = () => {
               type='password'
               placeholder='Enter password'
               value={password}
-              onChange={e => onChange(e)}
+              onChange={e => setPassword(e.target.value)}
             ></Form.Control>
           </Form.Group>
 
@@ -96,12 +91,12 @@ const ProfileScreen = () => {
               type='password'
               placeholder='Confirm Password'
               value={password2}
-              onChange={e => onChange(e)}
+              onChange={e => setPassword2(e.target.value)}
             ></Form.Control>
           </Form.Group>
 
           <Button type='submit' variant='primary'>
-            Register
+            Update
           </Button>
         </Form>
       </Col>

@@ -39,14 +39,27 @@ export const user = (state = {}, { type, payload }) => {
 export const userDetails = (state = { user: {} }, { type, payload }) => {
   switch (type) {
     case USER_DETAILS_REQUEST:
-    case USER_UPDATE_PROFILE_REQUEST:
       return { ...state, loading: true };
 
     case USER_DETAILS_SUCCESS:
-    case USER_UPDATE_PROFILE_SUCCESS:
       return { loading: false, user: payload };
 
     case USER_DETAILS_FAIL:
+      return { loading: false, error: payload };
+
+    default:
+      return state;
+  }
+};
+
+export const userUpdateProfile = (state = {}, { type, payload }) => {
+  switch (type) {
+    case USER_UPDATE_PROFILE_REQUEST:
+      return { loading: true };
+
+    case USER_UPDATE_PROFILE_SUCCESS:
+      return { loading: false, success: true, userInfo: payload };
+
     case USER_UPDATE_PROFILE_FAIL:
       return { loading: false, error: payload };
 
