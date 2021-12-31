@@ -71,7 +71,7 @@ export const loginUser = asyncHandler(async (req, res) => {
   const user = await User.findOne({ email });
 
   if (user && (await user.matchPassword(password))) {
-    res.status(200).json({
+    res.json({
       _id: user.id,
       name: user.name,
       email: user.email,
@@ -88,7 +88,7 @@ export const loginUser = asyncHandler(async (req, res) => {
 //  @desc   Get user profile data
 //  @access Private
 
-export const getUser = asyncHandler(async (req, res, next) => {
+export const getProfile = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user._id);
   if (!user) throw new Error('User does not exist');
 
@@ -97,5 +97,37 @@ export const getUser = asyncHandler(async (req, res, next) => {
     name: user.name,
     email: user.email,
     isAdmin: user.isAdmin,
+  });
+});
+
+//  @route  PUT api/Users/profile
+//  @desc   Updates user profile data
+//  @access Private
+
+export const updateProfile = asyncHandler(async (req, res, next) => {
+  // Get Errors
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    res.status(401);
+    throw new Error('Invalid credentials');
+  }
+
+  const user = await User.findById(req.user._id);
+  if (!user) throw new Error('User does not exist');
+
+  user.name = req.body.name || user.name;
+  user.email = req.body.email || user.email;
+  if (req.body.password) {
+    user.password = req.body.password;
+  }
+
+  const updatedProfile = await user.save();
+
+  res.json({
+    _id: updatedProfile.id,
+    name: updatedProfile.name,
+    email: updatedProfile.email,
+    isAdmin: updatedProfile.isAdmin,
+    token: generateToken(updatedProfile._id),
   });
 });

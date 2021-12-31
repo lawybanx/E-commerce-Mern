@@ -1,9 +1,10 @@
 import express from 'express';
 import {
   getUsers,
-  getUser,
+  getProfile,
   registerUser,
   loginUser,
+  updateProfile,
 } from '../../controllers/userController.js';
 import { check } from 'express-validator';
 import { auth } from '../../middleware/auth.js';
@@ -33,6 +34,6 @@ router.post(
   loginUser
 );
 
-router.route('/profile').get(auth, getUser);
+router.route('/profile').get(auth, getProfile).put(auth, updateProfile);
 
 export default router;
