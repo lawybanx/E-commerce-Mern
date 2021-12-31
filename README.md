@@ -22,7 +22,7 @@ npm run data:import
 # Run the destroy data seeder script
 npm run data:destroy
 
-#HAPPY NEW YEAR:fireworks:
+#HAPPY NEW YEAR 🎆🎆🎆
 
 # Server runs on http://localhost:5000 and client on http://localhost:3000
 ```
