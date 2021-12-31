@@ -9,6 +9,7 @@ import LoginScreen from './screens/LoginScreen';
 import { Provider } from 'react-redux';
 import store from './store';
 import RegisterScreen from './screens/RegisterScreen';
+import ProfileScreen from './screens/ProfileScreen';
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
               </Route>
               <Route path='/login' element={<LoginScreen />} />
               <Route path='/register' element={<RegisterScreen />} />
+              <Route path='/profile' element={<ProfileScreen />} />
             </Routes>
           </Container>
         </main>
