@@ -10,6 +10,9 @@ import {
   USER_DETAILS_REQUEST,
   USER_DETAILS_FAIL,
   USER_DETAILS_SUCCESS,
+  USER_UPDATE_PROFILE_REQUEST,
+  USER_UPDATE_PROFILE_SUCCESS,
+  USER_UPDATE_PROFILE_FAIL,
 } from '../constants/userConstants';
 
 // Login User
@@ -67,11 +70,11 @@ export const logout = () => dispatch => {
 };
 
 // Get User Profile
-export const userProfile = id => async dispatch => {
+export const getUserDetails = id => async (dispatch, getState) => {
   try {
     dispatch({ type: USER_DETAILS_REQUEST });
 
-    const { data } = await axios.get(`api/users/profile/${id}`);
+    const { data } = await axios.get(`api/users/${id}`, tokenConfig(getState));
 
     dispatch({
       type: USER_DETAILS_SUCCESS,
@@ -86,4 +89,44 @@ export const userProfile = id => async dispatch => {
           : err.response.data.errors,
     });
   }
+};
+
+// Update User Profile
+export const updateUserProfile = formData => async (dispatch, getState) => {
+  try {
+    dispatch({ type: USER_UPDATE_PROFILE_REQUEST });
+
+    const { data } = await axios.put(
+      'api/users/profile',
+      formData,
+      tokenConfig(getState)
+    );
+
+    dispatch({
+      type: USER_UPDATE_PROFILE_SUCCESS,
+      payload: data,
+    });
+  } catch (err) {
+    dispatch({
+      type: USER_UPDATE_PROFILE_FAIL,
+      payload:
+        err.response && err.response.data.message
+          ? err.response.data.message
+          : err.response.data.errors,
+    });
+  }
+};
+
+export const tokenConfig = getState => {
+  // Get token from localstorage
+  const { token } = getState().user.userInfo;
+
+  // Headers
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  return config;
 };

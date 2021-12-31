@@ -115,10 +115,12 @@ export const updateProfile = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user._id);
   if (!user) throw new Error('User does not exist');
 
-  user.name = req.body.name || user.name;
-  user.email = req.body.email || user.email;
-  if (req.body.password) {
-    user.password = req.body.password;
+  const { name, email, password } = req.body;
+
+  user.name = name || user.name;
+  user.email = email || user.email;
+  if (password) {
+    user.password = password;
   }
 
   const updatedProfile = await user.save();
