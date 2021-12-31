@@ -1,4 +1,5 @@
 ## Quick Start
+
 ```bash
 # Install dependencies for server
 npm install
@@ -7,7 +8,7 @@ npm install
 npm run client-install
 
 # Run the client & server with concurrently
-npm run dev 
+npm run dev
 
 # Run the Express server only
 npm run server
@@ -20,6 +21,8 @@ npm run data:import
 
 # Run the destroy data seeder script
 npm run data:destroy
+
+#HAPPY NEW YEAR:fireworks:
 
 # Server runs on http://localhost:5000 and client on http://localhost:3000
 ```
