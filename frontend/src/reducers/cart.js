@@ -1,11 +1,12 @@
 import {
   CART_ADD_ITEM,
   CART_REMOVE_ITEM,
+  CART_SAVE_PAYMENT_METHOD,
   CART_SAVE_SHIPPING_ADDRESS,
 } from '../constants/cartConstants';
 
 export const cart = (
-  state = { cartItems: [], shippingAddress: {} },
+  state = { cartItems: [], shippingAddress: {}, paymentMethod: null },
   { type, payload }
 ) => {
   switch (type) {
@@ -36,6 +37,12 @@ export const cart = (
       return {
         ...state,
         shippingAddress: payload,
+      };
+
+    case CART_SAVE_PAYMENT_METHOD:
+      return {
+        ...state,
+        paymentMethod: payload,
       };
 
     default:
