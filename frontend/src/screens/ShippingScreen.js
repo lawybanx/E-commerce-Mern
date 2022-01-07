@@ -1,53 +1,34 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Form, Button, Row, Col } from 'react-bootstrap';
-import Message from '../components/Message';
-import Loader from '../components/Loader';
+import { useNavigate } from 'react-router-dom';
+import { Form, Button } from 'react-bootstrap';
 import FormContainer from '../components/FormContainer';
+import { saveShippingAddress } from '../actions/cart';
 
 const ShippingScreen = () => {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
-  const { search } = useLocation();
+  const { shippingAddress } = useSelector(state => state.cart);
 
-  const redirect = search ? search.split('=')[1] : '/';
-
-  const { userInfo, loading, error } = useSelector(state => state.user);
-
-  useEffect(() => {
-    if (!userInfo) {
-      navigate(redirect);
-    }
-  }, [navigate, redirect, userInfo]);
-
-  const [formData, setFormData] = useState({
-    address: '',
-    city: '',
-    postalCode: '',
-    country: '',
-  });
-  const { address, city, postalCode, country } = formData;
-
-  const onChange = e => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const [address, setAddress] = useState(shippingAddress.address || '');
+  const [city, setCity] = useState(shippingAddress.city || '');
+  const [postalCode, setPostalCode] = useState(
+    shippingAddress.postalCode || ''
+  );
+  const [country, setCountry] = useState(shippingAddress.country || '');
 
   const submitHandler = e => {
     e.preventDefault();
 
-    console.log(formData);
-    // dispatch(loginUser(formData));
+    dispatch(saveShippingAddress({ address, city, postalCode, country }));
+    navigate('/payment');
   };
 
   return (
     <FormContainer>
-      <Row></Row>
       <h1>Shipping</h1>
-      {error && <Message variant='danger'>{error}</Message>}
-      {loading && <Loader />}
       <Form onSubmit={submitHandler}>
         <Form.Group className='mb-3' controlId='address'>
           <Form.Label>Address</Form.Label>
@@ -56,7 +37,8 @@ const ShippingScreen = () => {
             type='text'
             placeholder='Enter address'
             value={address}
-            onChange={e => onChange(e)}
+            required
+            onChange={e => setAddress(e.target.value)}
           ></Form.Control>
         </Form.Group>
 
@@ -67,7 +49,8 @@ const ShippingScreen = () => {
             type='text'
             placeholder='Enter city'
             value={city}
-            onChange={e => onChange(e)}
+            required
+            onChange={e => setCity(e.target.value)}
           ></Form.Control>
         </Form.Group>
 
@@ -78,7 +61,8 @@ const ShippingScreen = () => {
             type='text'
             placeholder='Enter postal code'
             value={postalCode}
-            onChange={e => onChange(e)}
+            required
+            onChange={e => setPostalCode(e.target.value)}
           ></Form.Control>
         </Form.Group>
 
@@ -89,14 +73,15 @@ const ShippingScreen = () => {
             type='text'
             placeholder='Enter country'
             value={country}
-            onChange={e => onChange(e)}
+            required
+            onChange={e => setCountry(e.target.value)}
           ></Form.Control>
         </Form.Group>
-      </Form>
 
-      <Button type='submit' variant='primary'>
-        Continue
-      </Button>
+        <Button type='submit' variant='primary'>
+          Continue
+        </Button>
+      </Form>
     </FormContainer>
   );
 };
