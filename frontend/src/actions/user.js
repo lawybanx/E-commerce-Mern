@@ -67,10 +67,12 @@ export const registerUser = formData => async dispatch => {
 // Logout User
 export const logout = () => dispatch => {
   localStorage.removeItem('userInfo');
-  // localStorage.removeItem('cartItems');
+
+  localStorage.removeItem('cartItems');
+  
   dispatch({ type: USER_DETAILS_RESET });
   dispatch({ type: USER_LOGOUT });
-  // document.location.href = '/login';
+  document.location.href = '/login';
 };
 
 // Get User Profile
