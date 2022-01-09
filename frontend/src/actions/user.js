@@ -72,7 +72,7 @@ export const logout = () => dispatch => {
   
   dispatch({ type: USER_DETAILS_RESET });
   dispatch({ type: USER_LOGOUT });
-  document.location.href = '/login';
+  // document.location.href = '/login';
 };
 
 // Get User Profile
