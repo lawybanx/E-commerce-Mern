@@ -52,3 +52,8 @@ export const savePaymentMethod = formData => async dispatch => {
 
   localStorage.setItem('paymentMethod', JSON.stringify(formData));
 };
+
+// Create Order
+export const createOrder = formData => async dispatch => {
+  console.log('action created');
+};
